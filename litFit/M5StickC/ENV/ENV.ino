@@ -30,8 +30,8 @@ float threshold=1.5;
 const int ledPin = 33;
 unsigned long previousMillis=0;
 unsigned long currentMillis = 0;
-#define WIFI_SSID "OnePlus 6"       // Enter your SSID here
-#define WIFI_PASS "tantanatan"    // Enter your WiFi password here
+#define WIFI_SSID "XXXX"       // Enter your SSID here
+#define WIFI_PASS "XXXX"    // Enter your WiFi password here
 #define serverName "http://37625b93.ngrok.io/testdata"
 #define fallURL "http://37625b93.ngrok.io/falldetect"
 WiFiClient client;
