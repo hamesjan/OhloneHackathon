@@ -2,7 +2,7 @@
 The base code for the M5 Stick C was provided by the manufacturer itself. We used the given examples and added some of our own functions to the project to make it work.
 
 litFit -> M5StickC -> ENV -> ENV.ino
-ENV.ino is the main arduino function file. Open thenat file and upload it to the M5StickC. All the headders file ablong with any dependencies will be uploaded.
+ENV.ino is the main arduino function file. Open that file and upload it to the M5StickC. All the headders file ablong with any dependencies will be uploaded.
 
 Note - Make sure to change the SSID and Password for the wifi.
 
