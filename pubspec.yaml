@@ -28,6 +28,7 @@ dependencies:
   shared_preferences:
   http:
   image_picker:
+  url_launcher:
 
 dev_dependencies:
   flutter_test:

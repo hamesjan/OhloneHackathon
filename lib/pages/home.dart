@@ -35,6 +35,28 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Hero(
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+                color: Colors.cyan
+            ),
+            child :
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.directions_run),
+                Text('LitFit', style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold
+                ),)
+              ],
+            ),
+          ),
+          tag: 'Hero1',
+
+        ),
         leading: Container(),
         actions: <Widget>[
           IconButton(

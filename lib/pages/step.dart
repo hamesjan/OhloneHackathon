@@ -181,19 +181,26 @@ class _StepPageState extends State<StepPage> {
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     color: Colors.blue,
-                    borderRadius: BorderRadius.all(Radius.circular(10) ),
+                    borderRadius: BorderRadius.all(Radius.circular(25) ),
                   ),
                   padding: EdgeInsets.all(5),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        'Excersice Activity',
-                        style: TextStyle(
-                            fontSize: 42,
-                            color: Colors.white
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.directions_run,size: 25, color: Colors.white,),
+                          Text(
+                            'Activity',
+                            style: TextStyle(
+                                fontSize: 42,
+                                color: Colors.white
+                            ),
+                          ),
+                          Icon(Icons.directions_run,size: 25, color: Colors.white,)
+                        ],
                       ),
                       Divider(thickness: 2,color: Colors.white,),
                       SizedBox(
@@ -203,7 +210,17 @@ class _StepPageState extends State<StepPage> {
                         stream: DataFetcher().stream,
                         builder: (context,snapshot) {
                           if(!snapshot.hasData){
-                            return CircularProgressIndicator();
+                            return Row(  mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                              CircularProgressIndicator(backgroundColor: Colors.white,)
+                            ],
+                            );
+                          } else if (snapshot.hasError){
+                            return Row(  mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                CircularProgressIndicator(backgroundColor: Colors.white,)
+                              ],
+                            );
                           }
                           return Column(
                             children: <Widget>[
@@ -245,7 +262,7 @@ class _StepPageState extends State<StepPage> {
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10) ),
+                  borderRadius: BorderRadius.all(Radius.circular(25) ),
                   gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,

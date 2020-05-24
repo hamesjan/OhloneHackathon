@@ -39,6 +39,21 @@ class _LoginState extends State<Login> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Hero(
+              tag: 'Hero1',
+              child:Container(
+                decoration: BoxDecoration(
+                    color: Colors.cyan,
+                    borderRadius: BorderRadius.all(Radius.circular(25))
+                ),
+                child: Image(
+                  image: AssetImage('assets/images/app_icon.png'),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
             TextField(
                 onChanged: (value) => email = value,
                 decoration: InputDecoration(
