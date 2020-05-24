@@ -24,7 +24,7 @@ class _AchievementsState extends State<Achievements> {
     Icons.trending_down,
     Icons.trending_down,
     Icons.trending_down,];
-  List<bool> achieved = [true,true,true,true,true,true,true,true,true,true,true,true,true,true,true];
+  List<bool> achieved = [true,true,true,false,false,false,false,false,false,true,true,false,false,false,false];
   List<String> achievementDescription = [
     'Walk 10 steps',
     'Walk 100 steps',

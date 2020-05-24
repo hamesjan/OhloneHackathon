@@ -224,7 +224,7 @@ class _StepPageState extends State<StepPage> {
                           }
                           return Column(
                             children: <Widget>[
-                              Text('Excersice Points: ${snapshot.data.totalsteps}',
+                              Text('Exercise Points: ${snapshot.data.totalsteps}',
                                   style: TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,

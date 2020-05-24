@@ -29,6 +29,7 @@ dependencies:
   http:
   image_picker:
   url_launcher:
+  mime:
 
 dev_dependencies:
   flutter_test:

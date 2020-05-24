@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:ohlonehackssubmission/widgets/custom_button.dart';
+import 'package:ohlonehackssubmission/classes/CalorieData.dart';
+import 'package:mime/mime.dart';
 
 
 class FoodCalorie extends StatefulWidget {
@@ -13,75 +15,23 @@ class FoodCalorie extends StatefulWidget {
 }
 
 class FoodCalorieState extends State<FoodCalorie> {
-  static final String uploadEndPoint = 'enterendpoint here';
   Future<File> file;
   String status = '';
   String base64Image;
   File tmpFile;
   String errMessage = 'Error Uploading Image';
 
-  chooseImage() {
-    setState(() {
-      file = ImagePicker.pickImage(source: ImageSource.gallery);
-    });
-    setStatus('');
-  }
 
-  setStatus(String message) {
-    setState(() {
-      status = message;
-    });
-  }
-
-  startUpload() {
-    setStatus('Uploading Image...');
-    if (null == tmpFile) {
-      setStatus(errMessage);
-      return;
+  Future<http.StreamedResponse> uploadImage(filename, url) async {
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      request.files.add(await http.MultipartFile.fromPath('file', filename));
+      var res = await request.send();
+      return res;
     }
-    String fileName = tmpFile.path.split('/').last;
-    upload(fileName);
-  }
 
-  upload(String fileName) {
-    http.post(uploadEndPoint, body: {
-      "image": base64Image,
-      "name": fileName,
-    }).then((result) {
-      setStatus(result.statusCode == 200 ? result.body : errMessage);
-    }).catchError((error) {
-      setStatus(error);
-    });
-  }
 
-  Widget showImage() {
-    return FutureBuilder<File>(
-      future: file,
-      builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done &&
-            null != snapshot.data) {
-          tmpFile = snapshot.data;
-          base64Image = base64Encode(snapshot.data.readAsBytesSync());
-          return Flexible(
-            child: Image.file(
-              snapshot.data,
-              fit: BoxFit.fill,
-            ),
-          );
-        } else if (null != snapshot.error) {
-          return const Text(
-            'Error Picking Image',
-            textAlign: TextAlign.center,
-          );
-        } else {
-          return const Text(
-            'No Image Selected',
-            textAlign: TextAlign.center,
-          );
-        }
-      },
-    );
-  }
+  String respStr = '';
+  CalorieData CalData = CalorieData(calories: 'Select an Image to get Started', names: ['']);
 
   @override
   Widget build(BuildContext context) {
@@ -92,38 +42,92 @@ class FoodCalorieState extends State<FoodCalorie> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             CustomButton(
-              callback: chooseImage,
-              text: 'Choose Image',
+              text: 'Select an Image of Your Meal.',
+              callback: () async {
+                var file = await ImagePicker.pickImage(source: ImageSource.gallery);
+                var res = await uploadImage(file.path, "http://37625b93.ngrok.io/caloriecount");
+                respStr = await res.stream.bytesToString();
+                setState(() {
+                  CalData = CalorieData.fromJson(jsonDecode(respStr));
+                });
+              }
             ),
             SizedBox(
               height: 20.0,
             ),
-            showImage(),
-            SizedBox(
-              height: 20.0,
+//            FutureBuilder(
+//              initialData: CalorieData(calories: 'Waiting ',names: ['Waiting']),
+//              future: fetchUserOrder(),
+//              builder: (BuildContext context, AsyncSnapshot snapshot){
+//                List _lst = snapshot.data.names.map((title)=> Text(title,)).toList();
+
+                 Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                            color: Colors.greenAccent,
+                            borderRadius: BorderRadius.all(Radius.circular(25))
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Icon(Icons.fastfood, color: Colors.black,),
+                                SizedBox(width: 15,),
+                                Text('Calorie Calculator', style: TextStyle(
+                                    fontWeight:FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 25
+
+                                ),)
+
+                              ],
+                            ),
+                            Divider(thickness: 5,),
+                            Container(
+                              padding: EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                  color: Colors.redAccent,
+                                  borderRadius: BorderRadius.all(Radius.circular(25))
+                              ),
+                              child: Text('Calculated Calories: ${CalData.calories}', style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black
+                              ),),
+                            ),
+                            SizedBox(
+                              height: 25,
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                  color: Colors.redAccent,
+                                  borderRadius: BorderRadius.all(Radius.circular(25))
+                              ),
+                              child: 
+
+                              Text('Foods: ${CalData.names.toString().substring(1, CalData.names.toString().length - 1)}', style: TextStyle(
+                                  fontSize: 28,
+                                  //color: Colors.black
+                            ),
+                         ),
+                            )
+
+                          ],
+
+                        ),
+                      )
+
+                    ],
+
+                  )
+//                }
+//                ),
+             ],
             ),
-            CustomButton(
-              callback: startUpload,
-              text: 'Upload Image',
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            Text(
-              status,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.w500,
-                fontSize: 20.0,
-              ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-          ],
-        ),
-      ),
+          )
     );
   }
 }

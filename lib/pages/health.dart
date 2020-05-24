@@ -89,7 +89,7 @@ class _HealthState extends State<Health> {
                                 color: Colors.redAccent,
                                 borderRadius: BorderRadius.all(Radius.circular(25))
                             ),
-                            child: Text('Blood Oxygen: ${snapshot.data.pulse} BPM', style: TextStyle(
+                            child: Text('Blood Oxygen: ${snapshot.data.bloodoxygen}% Saturation ', style: TextStyle(
                                 fontSize: 28,
                                 color: Colors.white
                             ),),
