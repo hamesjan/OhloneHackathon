@@ -8,36 +8,35 @@ StepData stepDataFromJson(String str) => StepData.fromJson(json.decode(str));
 String stepDataToJson(StepData data) => json.encode(data.toJson());
 
 class StepData {
-  int totalSteps;
-  int stepsToday;
-  int stepsThisWeek;
+  String totalsteps;
+  String dailysteps;
+  String weeklysteps;
 
   StepData({
-    this.totalSteps,
-    this.stepsToday,
-    this.stepsThisWeek,
+    this.totalsteps,
+    this.dailysteps,
+    this.weeklysteps,
   });
 
   factory StepData.fromJson(Map<String, dynamic> json) => StepData(
-    totalSteps: json["totalSteps"],
-    stepsToday: json["stepsToday"],
-    stepsThisWeek: json["stepsThisWeek"],
+    totalsteps: json["totalsteps"],
+    dailysteps: json["dailysteps"],
+    weeklysteps: json["weeklysteps"],
   );
 
   Map<String, dynamic> toJson() => {
-    "totalSteps": totalSteps,
-    "stepsToday": stepsToday,
-    "stepsThisWeek": stepsThisWeek,
+    "totalsteps": totalsteps,
+    "dailysteps": dailysteps,
+    "weeklysteps": weeklysteps,
   };
 }
 
 
 
 class DataFetcher {
-  Map<String, dynamic> sample = { 'totalSteps': 4, 'stepsToday': 4, "stepsThisWeek": 5};
+   Map<String, dynamic> sample = { 'totalSteps': 4, 'stepsToday': 4, "stepsThisWeek": 5};
 
-  StepData _stepdata;
-  
+
   // ignore: close_sinks
   final _controller = StreamController<StepData>();
 
@@ -47,14 +46,13 @@ class DataFetcher {
 
     Timer.periodic(Duration(seconds: 1), (t) async {
       // add the http status code = 200
-      var response = await http.get('https://us-central1-teamzero.cloudfunctions.net/function-1');
-      // print(response.body);
-
+      var response = await http.post('https://us-central1-aiot-fit-xlab.cloudfunctions.net/ufitgetsteps');
+       // print(response.body);
 
       _controller.add(
-      //  StepData.fromJson(jsonDecode(response.body))
+       StepData.fromJson(jsonDecode(response.body))
 
-          StepData.fromJson(sample)
+         // StepData.fromJson(sample)
       );
     });
 

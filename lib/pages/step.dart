@@ -207,14 +207,14 @@ class _StepPageState extends State<StepPage> {
                           }
                           return Column(
                             children: <Widget>[
-                              Text('Excersice Points: ${snapshot.data.totalSteps.toString()}',
+                              Text('Excersice Points: ${snapshot.data.totalsteps}',
                                   style: TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white
                               )),
                               SizedBox(height: 12,),
-                              Text('Steps Today: ${snapshot.data.stepsToday.toString()}',
+                              Text('Steps Today: ${snapshot.data.dailysteps}',
                                   style: TextStyle(
                                       fontSize: 22,
                                       fontWeight: FontWeight.bold,
@@ -222,7 +222,7 @@ class _StepPageState extends State<StepPage> {
                                   )
                               ),
                               SizedBox(height: 12,),
-                              Text('Steps This Week: ${snapshot.data.stepsThisWeek.toString()}',
+                              Text('Steps This Week: ${snapshot.data.weeklysteps}',
                                   style: TextStyle(
                                       fontSize: 22,
                                       fontWeight: FontWeight.bold,
@@ -233,7 +233,6 @@ class _StepPageState extends State<StepPage> {
                           );
                         },
                       ),
-
                     ],),
                 ),
               ],
