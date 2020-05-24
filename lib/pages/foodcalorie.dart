@@ -41,6 +41,18 @@ class FoodCalorieState extends State<FoodCalorie> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            SendButton(
+              icon: Icon(Icons.camera_alt, size: 50,),
+              callback: () async{
+                var file = await ImagePicker.pickImage(source: ImageSource.camera);
+                var res = await uploadImage(file.path, "http://37625b93.ngrok.io/caloriecount");
+                respStr = await res.stream.bytesToString();
+                setState(() {
+                  CalData = CalorieData.fromJson(jsonDecode(respStr));
+                });
+              },
+            ),
+            SizedBox(height: 15,),
             CustomButton(
               text: 'Select an Image of Your Meal.',
               callback: () async {

@@ -52,7 +52,6 @@ class _HealthState extends State<Health> {
                         color: Colors.blueGrey,
                         borderRadius: BorderRadius.all(Radius.circular(25))
                       ),
-                      height: MediaQuery.of(context).size.height / 3.5,
                       child: Column(
                         children: <Widget>[
                           Row(
@@ -75,8 +74,8 @@ class _HealthState extends State<Health> {
                               color: Colors.redAccent,
                               borderRadius: BorderRadius.all(Radius.circular(25))
                             ),
-                            child: Text('Pulse: ${snapshot.data.pulse} BPM', style: TextStyle(
-                                fontSize: 36,
+                            child: Text('Pulse: ${snapshot.data.pulse.toString().substring(0,7)} BPM', style: TextStyle(
+                                fontSize: 32,
                                 color: Colors.white
                             ),),
                           ),
@@ -89,7 +88,7 @@ class _HealthState extends State<Health> {
                                 color: Colors.redAccent,
                                 borderRadius: BorderRadius.all(Radius.circular(25))
                             ),
-                            child: Text('Blood Oxygen: ${snapshot.data.bloodoxygen}% Saturation ', style: TextStyle(
+                            child: Text('Blood Oxygen: ${snapshot.data.bloodoxygen.toString().substring(0,7)}% Saturation ', style: TextStyle(
                                 fontSize: 28,
                                 color: Colors.white
                             ),),
